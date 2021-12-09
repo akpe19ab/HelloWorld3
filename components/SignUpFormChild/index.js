@@ -8,11 +8,9 @@ import auth from 'firebase/compat/auth'
 
 export default SignUpFormChild = (props) =>{
 
-    const child = props.child
+    const child = props.child;
 
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [isCompleted, setCompleted] = useState(false) //Note, ved ikke hvad den her skal bruges til. (Hentet fra øvelse 4)
+    const [parentPassword, setParentPassword] = useState('')
     const [errorMessage, setErrorMessage] = useState(null)
 
     //Her defineres brugeroprettelsesknappen, som aktiverer handleSubmit igennem onPress
@@ -21,13 +19,17 @@ export default SignUpFormChild = (props) =>{
     };
 
     //Sætter en userRef, da vi gerne vil have en liste over vores brugere, hvor der også kan tilføjes attributter såsom om de er forældre eller børn.
-    const childRef = firebase.database().ref("child")
+    const childRef = firebase.database().ref("user")
 
 
-    const handleSubmit = async () => {
 
+
+
+
+
+  /* const handleSubmit = async () => {
         try {
-            await firebase.auth().createUserWithEmailAndPassword(email, password).then(async data => {
+            await firebase.auth().createUserWithEmailAndPassword(name, parentPassword).then(async data => {
                 await childRef.push({
                     uid: data.child.uid,
                     actor: child
@@ -60,5 +62,7 @@ export default SignUpFormChild = (props) =>{
             )}
             {renderButton()}
         </View>
-    );
+    ); */
+
+
 };
