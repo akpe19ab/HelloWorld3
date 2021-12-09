@@ -1,11 +1,7 @@
-import  React, { useEffect, useState } from 'react'
-import { View, Text, Pressable, TextInput, Button, Alert } from 'react-native'
+import  React, {useState } from 'react'
+import { View, Text, TextInput, Button, Alert } from 'react-native'
 import styles from './styles'
-
 import firebase from 'firebase/compat/app'
-import auth from 'firebase/compat/auth'
-
-
 
 export default SignUpForm = (props) =>{
 
@@ -22,9 +18,7 @@ export default SignUpForm = (props) =>{
     //Sætter en userRef, da vi gerne vil have en liste over vores brugere, hvor der også kan tilføjes attributter såsom om de er forældre eller børn.
     const userRef = firebase.database().ref("user")
 
-
     const handleSubmit = async () => {
-        
         try {
             await firebase.auth().signInWithEmailAndPassword(email, password).then(data => {Alert.alert("Logged in succesfully")})
         } catch(error) {

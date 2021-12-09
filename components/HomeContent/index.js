@@ -1,28 +1,22 @@
 import React from 'react'
-import {View, Text, ImageBackground, Pressable} from 'react-native'
+import {View, Text, ImageBackground} from 'react-native'
 import styles from './styles'
 import StylesButton from "../StylesButton"
-import Home from "./Home"
 
-
-
-const CarItem = (props) =>{
-
-    const {name, tagline, image, taglineCta} = props;
+const HomeContent = (props) =>{
+    const {name, tagline, image, tagUnderline} = props;
     return (
-
         <View>
             <ImageBackground
                 source={image}
                 style={styles.image}
             />
 
-
             <View style={styles.titles}>
                 <Text style={styles.title}>{name}</Text>
-                <Text style={styles.subtitle}>{tagline}  <Text style={styles.subtitleCta}> {taglineCta}
-                </Text></Text>
-
+                <Text style={styles.subtitle}>{tagline}
+                    <Text style={styles.tagUnderline}> {tagUnderline} </Text>
+                </Text>
             </View>
 
             <View style={styles.buttonsContainer}>
@@ -33,18 +27,17 @@ const CarItem = (props) =>{
                        console.warn("Forældre tilmeldt")
                    }}
                />
-<StylesButton
+
+              <StylesButton
                     type="primary"
                     content={"Tilmeld dig som barn"}
                     onPress={()=>{
                         console.warn("Barn tilmeldt")
                     }}
-                />
+              />
             </View>
-
         </View>
-
     );
 };
 
-export default CarItem;
+export default HomeContent;

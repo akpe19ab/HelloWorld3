@@ -4,7 +4,6 @@ const styles = StyleSheet.create({
     container:{
         width: '100%',
         padding: 10,
-
     },
     button: {
 
@@ -17,8 +16,6 @@ const styles = StyleSheet.create({
         fontSize: 12,
         fontWeight: '500',
         textTransform: 'uppercase',
-
-
     },
     inputField: {
         borderWidth: 1,

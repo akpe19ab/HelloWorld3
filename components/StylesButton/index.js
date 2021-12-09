@@ -3,7 +3,6 @@ import {View, Text, Pressable} from 'react-native'
 import styles from './styles'
 
 const StylesButton = (props) =>{
-
     const {type, content, onPress} = props
     const backgroundColor = type ==='primary' ? 'black' : 'white';
     const textColor = type === 'primary' ? 'white':'black';
