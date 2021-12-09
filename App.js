@@ -1,7 +1,8 @@
 import Constants from 'expo-constants'
 import { StatusBar } from 'expo-status-bar';
 import React, {useEffect, useRef} from 'react';
-import { StyleSheet, Text, View, Alert, LogBox, ScrollView } from 'react-native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { StyleSheet, Text, View, Alert, LogBox, ScrollView, Button} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native'
 import * as Notifications from 'expo-notifications';
 import firebase from 'firebase/compat/app';
@@ -35,7 +36,31 @@ const firebaseConfig = {
   messagingSenderId: "850548815144",
   appId: "1:850548815144:web:e3b3c9ccf09997e7424c1d"
 };
-
+function HomeScreen({navigation}) {
+  return (
+      <View>
+        <ScrollView>
+          <CarItem name={"Børnenes huskeliste"}
+                   tagline={"Opret en konto"}
+                   image={require("./assets/images/child2.jpeg")}
+                   taglineCta={"nu"}/>
+                   <Button title="Go to Details" onPress={() => navigation.navigate('Details')}></Button>
+          <TimeStamper/>
+          <StatusBar style="auto" />
+          <SignUpForm parent={true}/>
+          <LoginForm/>
+        </ScrollView>
+      </View>
+  );
+}
+function DetailsScreen() {
+  return (
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <Text>Details Screen</Text>
+      </View>
+  );
+}
+const Stack = createNativeStackNavigator();
 // Initialize Firebase
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig)
@@ -88,15 +113,13 @@ export default function App() {
 
 
   return (
-    <View>
-      <ScrollView>
-        <CarItem/>
-        <TimeStamper/>
-        <StatusBar style="auto" />
-        <SignUpForm parent={true}/>
-        <LoginForm/>
-      </ScrollView>  
-    </View>
+      <NavigationContainer>{
+        <Stack.Navigator initialRouteName="Home">
+          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="Details" component={DetailsScreen} />
+        </Stack.Navigator>
+
+      }</NavigationContainer>
   );
 }
 

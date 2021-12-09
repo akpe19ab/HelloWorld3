@@ -4,7 +4,7 @@ import styles from './styles'
 
 const StylesButton = (props) =>{
 
-    const {type, text} = props
+    const {type, content, onPress} = props
     const backgroundColor = type ==='primary' ? 'black' : 'white';
     const textColor = type === 'primary' ? 'white':'black';
 
@@ -13,10 +13,10 @@ const StylesButton = (props) =>{
             <Pressable
                 style={[styles.button, {backgroundColor: backgroundColor}]} 
                 onPress={() => {
-                    console.log(`Du har nu oprettet dig som ${text}`)
+                   onPress()
                 }}
             >
-                <Text style={[styles.text, {color: textColor}]}> Opret dig som {text}</Text>
+                <Text style={[styles.text, {color: textColor}]}>  {content}</Text>
             </Pressable>
         </View>
     );
