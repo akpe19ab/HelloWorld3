@@ -8,6 +8,7 @@ import firebase from 'firebase/compat/app';
 import database from 'firebase/compat/database'
 import registerForPushNotification from "./modules/registerForPushNotification";
 
+
 //Importerer componenter
 import HomeScreen from "./components/HomeScreen";
 import ToDoList from "./components/ToDoList";

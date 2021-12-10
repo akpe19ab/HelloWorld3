@@ -22,10 +22,13 @@ export default SignUpForm = (props) =>{
 
     const handleSubmit = async () => {
         try {
+
             await firebase.auth().createUserWithEmailAndPassword(email, password).then(async data => {
+                const knumber = Math.floor(10000 + Math.random() * 900000)
                 await userRef.push({
                     uid: data.user.uid,
-                    actor: parent
+                    actor: parent,
+                    key: knumber
                 }).then(ref => console.log(`RT_DB reference: ${JSON.stringify(ref).slice(75)}`)) //Virker ikke helt endnu, men i princippet kan man arbejde med brugerens reference i RT_databasen
                 Alert.alert("Oprettet")
             })
