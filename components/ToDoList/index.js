@@ -24,21 +24,30 @@ const getValue = async() => {
 function ToDoList(props) {
     const [task, setTask] = useState()
     const [taskItems, setTaskItems] = useState([])
-    const [specificUserId, setSpecificUserId] = useState('l')
+    let wow = JSON.stringify(getData())
+    const [specificUserId, setSpecificUserId] = useState(wow)
     useEffect(() => {
         fetchUser();
         },[]
     )
-    useEffect()
+    useEffect(() => {
+        console.log('render'+ specificUserId)
+    }, ["render" + specificUserId])
 const fetchUser = async() => {
-        let userId = await getData()
-    await setSpecificUserId("hej")
+    let userId = await getData()
+    await setSpecificUserId(userId)
     console.log(userId)
 }
     const handleAddTask = () => {
-      Keyboard.dismiss();
-      setTaskItems([...taskItems, task])
-       setTask(null)
+        const specificUserRef = firebase.database().ref(`user/${specificUserId.replace(/['"]+/g, '')}`)
+        console.log(specificUserRef)
+        specificUserRef.child('liste').push({
+            'liste': task
+        }
+    )
+        Keyboard.dismiss();
+        setTaskItems([...taskItems, task])
+        setTask(null)
         getData().then(console.log)
 
     }
