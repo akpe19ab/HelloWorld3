@@ -2,13 +2,19 @@ import {Text, View, TextInput, KeyboardAvoidingView, TouchableOpacity, Keyboard}
 import React, {useState} from "react";
 import styles from './styles'
 import Task from './Task'
+import firebase from 'firebase/compat/app'
 
 
-function ToDoList() {
+function ToDoList(props) {
     const [task, setTask] = useState()
-const [taskItems, setTaskItems] = useState([])
+    const [taskItems, setTaskItems] = useState([])
+
+
     const handleAddTask = () => {
         Keyboard.dismiss();
+
+            
+    
         setTaskItems([...taskItems, task])
         setTask(null)
     }
@@ -40,7 +46,7 @@ const [taskItems, setTaskItems] = useState([])
             </View>
             <KeyboardAvoidingView
                 behavior={Platform.OS === "ios" ? "padding" : "height"}
-            style={styles.writeTaskWrapper}>
+                style={styles.writeTaskWrapper}>
                 <TextInput style={styles.input} placeholder={'Write a task'} value={task} onChangeText={text=> setTask(text)}></TextInput>
                 <TouchableOpacity onPress={() => handleAddTask()}>
 <View style={styles.addWrapper}>

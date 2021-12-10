@@ -7,6 +7,15 @@ import * as Notifications from 'expo-notifications';
 import firebase from 'firebase/compat/app';
 import database from 'firebase/compat/database'
 import registerForPushNotification from "./modules/registerForPushNotification";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const storeData = async (value) => {
+    try {
+      await AsyncStorage.setItem('@storage_Key', value)
+    } catch (e) {
+      // saving error
+    }
+  }
 
 
 //Importerer componenter
@@ -44,6 +53,9 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   const responseListener = useRef();
+  useEffect(() => {
+    storeData("100")
+  },[])
 
   useEffect(() =>  {
     registerForPushNotification().then(token => console.log(`Token i effekt ${token}`)).
