@@ -1,28 +1,53 @@
 import {Text, View, TextInput, KeyboardAvoidingView, TouchableOpacity, Keyboard} from "react-native";
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import styles from './styles'
 import Task from './Task'
 import firebase from 'firebase/compat/app'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
+
+const getData = async () => {
+    try {
+        const value = AsyncStorage.getItem('@uid')
+        if(value !== null) {
+            return value
+        }
+    } catch(e) {
+        // error reading value
+    }
+}
+const getValue = async() => {
+    const value = await getData()
+    return value
+}
 
 function ToDoList(props) {
     const [task, setTask] = useState()
     const [taskItems, setTaskItems] = useState([])
-
-
+    const [specificUserId, setSpecificUserId] = useState('l')
+    useEffect(() => {
+        fetchUser();
+        },[]
+    )
+    useEffect()
+const fetchUser = async() => {
+        let userId = await getData()
+    await setSpecificUserId("hej")
+    console.log(userId)
+}
     const handleAddTask = () => {
-        Keyboard.dismiss();
+      Keyboard.dismiss();
+      setTaskItems([...taskItems, task])
+       setTask(null)
+        getData().then(console.log)
 
-            
-    
-        setTaskItems([...taskItems, task])
-        setTask(null)
     }
 
     const completeTask = (index) => {
         let itemsCopy = [...taskItems];
         itemsCopy.splice(index, 1);
         setTaskItems(itemsCopy);
+
     }
     return (
         <View style={styles.container}>

@@ -2,6 +2,28 @@ import  React, {useState } from 'react'
 import { View, Text, TextInput, Button, Alert } from 'react-native'
 import styles from './styles'
 import firebase from 'firebase/compat/app'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+const storeData = async (value) => {
+    try {
+        await AsyncStorage.setItem('@uid', value)
+        console.log(getData())
+        console.log(value)
+
+    } catch (e) {
+        // saving error
+    }
+}
+
+const getData = async () => {
+    try {
+        const value = await AsyncStorage.getItem('@uid')
+        if(value !== null) {
+           console.log(value)
+        }
+    } catch(e) {
+        // error reading value
+    }
+}
 
 export default SignUpForm = (props) =>{
 
@@ -20,7 +42,7 @@ export default SignUpForm = (props) =>{
 
     const handleSubmit = async () => {
         try {
-            await firebase.auth().signInWithEmailAndPassword(email, password).then(data => {Alert.alert("Logged in succesfully")})
+            await firebase.auth().signInWithEmailAndPassword(email, password).then(data => {storeData(JSON.stringify(data.user.uid))})
         } catch(error) {
             setErrorMessage(error.message)
         } 

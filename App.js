@@ -18,6 +18,17 @@ const storeData = async (value) => {
   }
 
 
+const getData = async () => {
+  try {
+    const value = await AsyncStorage.getItem('@storage_Key')
+    if(value !== null) {
+    console.log(value)
+    }
+  } catch(e) {
+    // error reading value
+  }
+}
+
 //Importerer componenter
 import HomeScreen from "./components/HomeScreen";
 import ToDoList from "./components/ToDoList";
@@ -56,7 +67,9 @@ export default function App() {
   useEffect(() => {
     storeData("100")
   },[])
-
+  useEffect(() => {
+    getData()
+  })
   useEffect(() =>  {
     registerForPushNotification().then(token => console.log(`Token i effekt ${token}`)).
     catch(err => console.log(`Der skete en fejl: ${err}`))
