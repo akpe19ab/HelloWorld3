@@ -6,6 +6,7 @@ import {NavigationContainer} from '@react-navigation/native'
 import * as Notifications from 'expo-notifications';
 import firebase from 'firebase/compat/app';
 import registerForPushNotification from "./modules/registerForPushNotification";
+import database from 'firebase/compat/database'
 
 //Importerer componenter
 import HomeScreen from "./components/HomeScreen";
