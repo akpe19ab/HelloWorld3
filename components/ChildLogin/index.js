@@ -13,13 +13,15 @@ export default ChildLogin = () => {
 
     const handleSubmit = async () => {
         try {
-            console.log
-            const test = await userRef.get()
-            const testTo = JSON.stringify(test);
+            const test3 = await userRef.get()
+            test3.forEach(function(childNodes){
+                if(kode==childNodes.val().key){
+                    console.log("NANI")
+                    console.log(childNodes)
+                }
 
-            for (property in test) {
-                console.log(property)
-            }
+            });
+
         } catch(e) {
             setErrorM(e)
         }
