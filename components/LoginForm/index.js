@@ -3,6 +3,11 @@ import { View, Text, TextInput, Button, Alert } from 'react-native'
 import styles from './styles'
 import firebase from 'firebase/compat/app'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useNavigation} from '@react-navigation/native';
+
+//Importerer komponenter
+import StylesButton from '../StylesButton';
+
 const storeData = async (value) => {
     try {
         await AsyncStorage.setItem('@uid', value)
@@ -26,7 +31,7 @@ const getData = async () => {
 }
 
 export default SignUpForm = (props) =>{
-
+    const nav = useNavigation()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [isCompleted, setCompleted] = useState(false) //Note, ved ikke hvad den her skal bruges til. (Hentet fra øvelse 4)
@@ -42,7 +47,7 @@ export default SignUpForm = (props) =>{
 
     const handleSubmit = async () => {
         try {
-            await firebase.auth().signInWithEmailAndPassword(email, password).then(data => {storeData(JSON.stringify(data.user.uid))})
+            await firebase.auth().signInWithEmailAndPassword(email, password).then(data => {storeData(JSON.stringify(data.user.uid)).then(nav.navigate("AppScreen"))})
         } catch(error) {
             setErrorMessage(error.message)
         } 

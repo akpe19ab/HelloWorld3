@@ -9,29 +9,12 @@ import database from 'firebase/compat/database'
 import registerForPushNotification from "./modules/registerForPushNotification";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const storeData = async (value) => {
-    try {
-      await AsyncStorage.setItem('@storage_Key', value)
-    } catch (e) {
-      // saving error
-    }
-  }
-
-
-const getData = async () => {
-  try {
-    const value = await AsyncStorage.getItem('@storage_Key')
-    if(value !== null) {
-    console.log(value)
-    }
-  } catch(e) {
-    // error reading value
-  }
-}
-
-//Importerer componenter
-import HomeScreen from "./components/HomeScreen";
-import ToDoList from "./components/ToDoList";
+//Importerer komponenter til navigation
+import HomeScreen from './components/HomeScreen'
+import SignUpForm from './components/SignUpForm';
+import LoginForm from './components/LoginForm';
+import ToDoList from './components/ToDoList';
+import AppScreen from './components/AppScreen'
 
 //Tillader appen at vise push-notifikationer mens den kører
 Notifications.setNotificationHandler({
@@ -60,16 +43,12 @@ const firebaseConfig = {
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig)
 }
-const Stack = createNativeStackNavigator();
+
 
 export default function App() {
+  const Stack = createNativeStackNavigator();
   const responseListener = useRef();
-  useEffect(() => {
-    storeData("100")
-  },[])
-  useEffect(() => {
-    getData()
-  })
+
   useEffect(() =>  {
     registerForPushNotification().then(token => console.log(`Token i effekt ${token}`)).
     catch(err => console.log(`Der skete en fejl: ${err}`))
@@ -78,13 +57,23 @@ export default function App() {
       console.log(`Expo token: ${response}`);
     })
   }, [])
-
+  //NOTE OM NAVIGATION.
+  //INDTIL VIDERE KAN VI NAVIGERE DIREKTE TIL TODOLIST. NÅR TESTING ER FÆRDIGT MED DENNE FORESLÅR JEG, AT DER I STEDET
+  //LAVES EN STACK.SCREEN DER LEDER EN VIDERE TIL EN KOMPONENT APPCONTENT, DER SÅ INDEHOLDER EN TAB.NAVIGATOR HVORI TODOLIST LIGGER.
+  //ToDoList KAN SAGTENS VÆRE INITIAL ROUTE
   return (
-      <NavigationContainer>{
-        <Stack.Navigator initialRouteName="Home">
-          <Stack.Screen name="Home" component={HomeScreen} />
-          <Stack.Screen name="ToDoList" component={ToDoList} />
-        </Stack.Navigator>
-      }</NavigationContainer>
+    <NavigationContainer>
+      <Stack.Navigator
+        initialRouteName="Home"
+      >
+        <Stack.Screen name="Home" component={HomeScreen}/>
+        <Stack.Screen name="SignUpForm" component={SignUpForm}/>
+        
+        <Stack.Screen name="LoginForm" component={LoginForm}/>
+        <Stack.Screen name="AppScreen" component={AppScreen}/>
+        <Stack.Screen name="ToDoList" component={ToDoList}/>
+
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
