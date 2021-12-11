@@ -1,8 +1,4 @@
 import { Text, Button, ScrollView, View, ImageBackground} from "react-native";
-import TimeStamper from "../TimeStamper";
-import {StatusBar} from "expo-status-bar";
-import SignUpForm from "../SignUpForm";
-import LoginForm from "../LoginForm";
 import React from "react";
 
 //Importerer styles
@@ -14,7 +10,6 @@ import StylesButton from "../StylesButton";
 function HomeScreen() {
     return (
         <View>
-            <ScrollView>
                 <ImageBackground
                 source={require('../../assets/images/child2.jpeg')}
                 style={styles.image}
@@ -28,29 +23,30 @@ function HomeScreen() {
             </View>
             
             <View style={styles.buttonsContainer}>
-                <StylesButton
-                   type="secondary"
-                   content={"Tilmeld dig som forældre!"}
-                   navigateTo={"SignUpForm"}
-                />
+                <ScrollView>
+                    <StylesButton
+                    type="secondary"
+                    content={"Tilmeld dig som forældre!"}
+                    navigateTo={"SignUpForm"}
+                    />
 
-                <StylesButton
-                    type="primary"
-                    content={"Login som barn"}
-                    navigateTo={"ChildLogIn"}
-                />
-                <StylesButton
-                    type="primary"
-                    content="Login som forælder"
-                    navigateTo="LoginForm"
-                />
-                <StylesButton
-                    type="primary"
-                    content="Huskelisten (temporary)"
-                    navigateTo={"ToDoList"}
-                />
-                </View>
-            </ScrollView>
+                    <StylesButton
+                        type="primary"
+                        content={"Login som barn"}
+                        navigateTo={"ChildLogin"}
+                    />
+                    <StylesButton
+                        type="primary"
+                        content="Login som forælder"
+                        navigateTo="LoginForm"
+                    />
+                    <StylesButton
+                        type="primary"
+                        content="Huskelisten (temporary)"
+                        navigateTo={"ToDoList"}
+                    />
+                </ScrollView>
+            </View>
         </View>
     );
 }

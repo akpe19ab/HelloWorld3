@@ -47,7 +47,7 @@ export default SignUpForm = (props) =>{
 
     const handleSubmit = async () => {
         try {
-            await firebase.auth().signInWithEmailAndPassword(email, password).then(data => {storeData(JSON.stringify(data.user.uid)).then(nav.navigate("AppScreen"))})
+            await firebase.auth().signInWithEmailAndPassword(email, password).then(data => {storeData(JSON.stringify(data.user.uid)).then(nav.navigate("AppScreen"))}) //Skal ske efter error er fanget, for at undgå at man bliver smidt videre uden at være logget ind
         } catch(error) {
             setErrorMessage(error.message)
         } 

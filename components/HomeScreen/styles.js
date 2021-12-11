@@ -5,7 +5,6 @@ const styles = StyleSheet.create({
         marginTop: '30%',
         width: '100%',
         alignItems: 'center',
-        flex: 1,
     },
     title: {
         fontSize: 40,

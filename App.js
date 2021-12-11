@@ -14,7 +14,8 @@ import HomeScreen from './components/HomeScreen'
 import SignUpForm from './components/SignUpForm';
 import LoginForm from './components/LoginForm';
 import ToDoList from './components/ToDoList';
-import AppScreen from './components/AppScreen'
+import AppScreen from './components/AppScreen';
+import ChildLogin from './components/ChildLogin';
 
 //Tillader appen at vise push-notifikationer mens den kører
 Notifications.setNotificationHandler({
@@ -68,7 +69,7 @@ export default function App() {
       >
         <Stack.Screen name="Home" component={HomeScreen}/>
         <Stack.Screen name="SignUpForm" component={SignUpForm}/>
-        
+        <Stack.Screen name="ChildLogin" component={ChildLogin}/>
         <Stack.Screen name="LoginForm" component={LoginForm}/>
         <Stack.Screen name="AppScreen" component={AppScreen}/>
         <Stack.Screen name="ToDoList" component={ToDoList}/>
