@@ -49,11 +49,22 @@ export default AddTask = (props) =>{
     };
 
     const handleConfirm = (date) => {
-        setChosenDate(date)
+        setChosenDate(new Date(date.setHours(date.getHours()+1)))
         setDatePickerVisible(false)
         console.log(date)
-    }
 
+    }
+    const handleAddTask = () => {
+        console.log(specificUserRef)
+        specificUserRef.child('liste').push({
+                'pligt': task
+            }
+        )
+        Keyboard.dismiss();
+        setTaskItems([...taskItems, task])
+        setTask(null)
+
+    }
     const handleSubmit = async () => {
         //Her skal der blot skubbes op i listen, se todolist
 
@@ -84,6 +95,8 @@ export default AddTask = (props) =>{
             <Button title={"Vælg dato"} onPress={() => setDatePickerVisible(true)}/>
             <DateTimePickerModal
                 isVisible={isDatePickerVisisble}
+                timeZoneOffsetInMinutes={60}
+                is24Hour={true}
                 mode="datetime"
                 onConfirm={handleConfirm}
                 onCancel={() => setDatePickerVisible(false)}
