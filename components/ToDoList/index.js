@@ -22,6 +22,7 @@ function ToDoList(props) {
     const navigation = useNavigation()
     const [task, setTask] = useState()
     const [taskItems, setTaskItems] = useState([])
+    const [taskItemsFull, setTaskItemsFull] = useState([])
     const [loading, setLoading]= useState(true)
     const [specificUserRef, setSpecificUserRef] = useState()
 
@@ -41,8 +42,9 @@ function ToDoList(props) {
             let liste
             test.forEach(childNodes => {
                 childNodes.forEach(childChildNodes => {
-                    console.log(childChildNodes.val()["pligt"])
-                    setTaskItems(prevTaskItems => [...prevTaskItems, childChildNodes.val()["pligt"]])
+                    console.log(childChildNodes.val()["titel"])
+                    setTaskItems(prevTaskItems => [...prevTaskItems, childChildNodes.val()["titel"]])
+                    setTaskItemsFull(prevTaskItemsFull => [...prevTaskItemsFull, childChildNodes.val()])
                 })
             })
         }
@@ -53,6 +55,7 @@ function ToDoList(props) {
         setLoading(true)
         console.log("loader")
         let userId = await getData() //Fanger userId, gemt i LoginForm
+        console.log(userId)
         setSpecificUserId(userId) //Egentlig overflødig, beholdes for nu
         setLoading(false)
         setSpecificUserRef(firebase.database().ref(`user/${userId.replace(/['"]+/g, '')}`)) //Sætter en global userRef til den bruger der er logget ind
@@ -71,15 +74,24 @@ function ToDoList(props) {
 
     }
 
-    const completeTask = (index) => {
+    const completeTask2 = (index) => {
         let itemsCopy = [...taskItems];
         itemsCopy.splice(index, 1);
         setTaskItems(itemsCopy);
 
     }
+    const completeTask = index => {
+        console.log("hej")
+console.log(getData())
+     
+        /*Her søger vi direkte i vores array af biler og finder bil objektet som matcher idet vi har tilsendt*/
+       let  ItemName = taskItemsFull[index]
+       
+        navigation.navigate("taskDetails", {ItemName })
+    };
     return (
         <View style={styles.container}>
-            <View style={styles.tasksWrapper}>
+          <View style={styles.tasksWrapper}>
                 <Text style={styles.sectionTitle}>Today's tasks</Text>
 
                 <View style={styles.items}>

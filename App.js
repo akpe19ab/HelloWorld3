@@ -16,7 +16,7 @@ import LoginForm from './components/LoginForm';
 import ToDoList from './components/ToDoList';
 import AppScreen from './components/AppScreen';
 import ChildLogin from './components/ChildLogin';
-
+import taskDetails from "./components/taskDetails";
 //Tillader appen at vise push-notifikationer mens den kører
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -67,6 +67,7 @@ export default function App() {
       <Stack.Navigator
         initialRouteName="Home"
       >
+        <Stack.Screen name="taskDetails" component={taskDetails}/>
         <Stack.Screen name="Home" component={HomeScreen}/>
         <Stack.Screen name="SignUpForm" component={SignUpForm}/>
         <Stack.Screen name="ChildLogin" component={ChildLogin}/>
