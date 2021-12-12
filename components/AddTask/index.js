@@ -49,7 +49,7 @@ export default AddTask = (props) =>{
     };
 
     const handleConfirm = (date) => {
-        setChosenDate(JSON.stringify(new Date(date.setHours(date.getHours()+1)).getTime()))
+        setChosenDate(JSON.stringify(new Date(date.setHours(date.getHours()+1))))
         setDatePickerVisible(false)
         let dummyDate = new Date()
         dummyDate.setHours(dummyDate.getHours()+1)
@@ -68,7 +68,7 @@ export default AddTask = (props) =>{
                 'beskrivelse': beskrivelse,
                 'tidspunkt': chosenDate
             }
-        )
+        ).then(nav.goBack())
     }
 
     return (

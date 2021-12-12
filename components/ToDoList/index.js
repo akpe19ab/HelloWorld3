@@ -1,4 +1,4 @@
-import {Text, View, TextInput, KeyboardAvoidingView, TouchableOpacity, Keyboard} from "react-native";
+import {Text, View, TextInput, KeyboardAvoidingView, TouchableOpacity, Keyboard } from "react-native";
 import React, {useState, useEffect} from "react";
 import styles from './styles'
 import Task from './Task'
@@ -25,6 +25,7 @@ function ToDoList(props) {
     const [taskItemsFull, setTaskItemsFull] = useState([])
     const [loading, setLoading]= useState(true)
     const [specificUserRef, setSpecificUserRef] = useState()
+    const [value, setValue] = useState(0);
 
     const [specificUserId, setSpecificUserId] = useState()
     useEffect(() => {//Funktion der henter den nuværende bruger
@@ -33,9 +34,12 @@ function ToDoList(props) {
     )
 
     useEffect(() => {
-        const unsubscribe = navigation.addListener('focus', () => {
-            console.log("velkommen")
-        })
+        navigation.addListener(
+            'focus',
+            payload =>{
+                setValue(value => value + 1)
+                console.log(specificUserRef)
+            })
     },[])
 
     useEffect(async () => { //Funktion der skal hente ToDoList itemsne
@@ -56,7 +60,7 @@ function ToDoList(props) {
             })
         }
 
-    }, [specificUserRef])
+    },[specificUserRef])
 
 
 
@@ -64,21 +68,21 @@ function ToDoList(props) {
         setLoading(true)
         console.log("loader")
         let userId = await getData() //Fanger userId, gemt i LoginForm
-        console.log(userId)
+        console.log("prutta" + userId)
         setSpecificUserId(userId) //Egentlig overflødig, beholdes for nu
         setLoading(false)
         setSpecificUserRef(firebase.database().ref(`user/${userId.replace(/['"]+/g, '')}`)) //Sætter en global userRef til den bruger der er logget ind
   
     }
 
-    const completeTask = index => {
+    const goToTask = (index) => {
         console.log("hej")
-console.log(getData())
+        console.log(getData())
      
         /*Her søger vi direkte i vores array af biler og finder bil objektet som matcher idet vi har tilsendt*/
        let  ItemName = taskItemsFull[index]
        
-        navigation.navigate("TaskDetails", {ItemName })
+        navigation.navigate("TaskDetails", {ItemName: ItemName, specificUserId: specificUserId})
     };
     return (
         <View style={styles.container}>
@@ -89,7 +93,7 @@ console.log(getData())
                     {
                         taskItems.map((item, index) => {
                           return (
-                              <TouchableOpacity key={index} onPress={()=> completeTask(index)}>
+                              <TouchableOpacity key={index} onPress={()=> goToTask(index)}>
 
                                   <Task text={item} />
                               </TouchableOpacity>
