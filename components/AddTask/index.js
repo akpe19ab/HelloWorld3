@@ -3,7 +3,8 @@ import styles from './styles'
 import firebase from 'firebase/compat/app'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
-import { View, Text, TextInput, Button, Alert } from 'react-native'
+import { View, Text, TextInput, Button, Alert } from 'react-native';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 const getData = async () => {
     try {
@@ -24,9 +25,10 @@ export default AddTask = (props) =>{
     const [loading, setLoading] = useState(true)
     const [specificUserId, setSpecificUserId] = useState("")
     const [speficicUserRef, setSpecificUserRef] = useState("")
+    const [isDatePickerVisisble, setDatePickerVisible] = useState(false)
+    const [chosenDate, setChosenDate] = useState()
 
     useEffect(()=>{
-
         fetchUser()
     },[])
 
@@ -41,23 +43,25 @@ export default AddTask = (props) =>{
 
     }
 
-
-
     //Her defineres brugeroprettelsesknappen, som aktiverer handleSubmit igennem onPress
     const renderButton = () => {
         return <Button onPress={() => handleSubmit()} title="Log in" />;
     };
 
-    //Sætter en userRef, da vi gerne vil have en liste over vores brugere, hvor der også kan tilføjes attributter såsom om de er forældre eller børn.
-    const userRef = firebase.database().ref("user")
+    const handleConfirm = (date) => {
+        setChosenDate(date)
+        setDatePickerVisible(false)
+        console.log(date)
+    }
 
     const handleSubmit = async () => {
+        //Her skal der blot skubbes op i listen, se todolist
+
         try {
             await firebase.auth().signInWithEmailAndPassword(email, password).then(async data => {await storeData(JSON.stringify(data.user.uid)).then(nav.navigate("AppScreen"))}) //Skal ske efter error er fanget, for at undgå at man bliver smidt videre uden at være logget ind
         } catch(error) {
             setErrorMessage(error.message)
-        }
-    }
+    }}
 
     return (
         <View>
@@ -67,6 +71,8 @@ export default AddTask = (props) =>{
                 value={titel}
                 onChangeText={titel => setTitel(titel)}
                 style={styles.inputField}
+                mode={'datetime'}
+                is24Hour={true}
             />
             <Text>Beskrivelse</Text>
             <TextInput
@@ -75,10 +81,18 @@ export default AddTask = (props) =>{
                 onChangeText={beskrivelse => setBeskrivelse(beskrivelse)}
                 style={styles.inputField}
             />
+            <Button title={"Vælg dato"} onPress={() => setDatePickerVisible(true)}/>
+            <DateTimePickerModal
+                isVisible={isDatePickerVisisble}
+                mode="datetime"
+                onConfirm={handleConfirm}
+                onCancel={() => setDatePickerVisible(false)}
+            />
+
             {errorMessage && (
                 <Text style={styles.error}>Error: {errorMessage}</Text>
             )}
             {renderButton()}
         </View>
     );
-};
+}
