@@ -97,16 +97,11 @@ function ToDoList(props) {
 
                 </View>
             </View>
-            <KeyboardAvoidingView
-                behavior={Platform.OS === "ios" ? "padding" : "height"}
-                style={styles.writeTaskWrapper}>
-                <TextInput style={styles.input} placeholder={'Write a task'} value={task} onChangeText={text=> setTask(text)}></TextInput>
-                <TouchableOpacity onPress={() => navigation.navigate("AddTask")}>
-<View style={styles.addWrapper}>
-<Text style={styles.addText}>+</Text>
-</View>
-                </TouchableOpacity>
-            </KeyboardAvoidingView>
+            <TouchableOpacity onPress={() => navigation.navigate("AddTask")}>
+                <View style={styles.addWrapper}>
+                    <Text style={styles.addText}>+</Text>
+                </View>
+            </TouchableOpacity>
         </View>
     );
 }

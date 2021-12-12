@@ -24,7 +24,7 @@ export default AddTask = (props) =>{
     const [errorMessage, setErrorMessage] = useState(null)
     const [loading, setLoading] = useState(true)
     const [specificUserId, setSpecificUserId] = useState("")
-    const [speficicUserRef, setSpecificUserRef] = useState("")
+    const [specificUserRef, setSpecificUserRef] = useState("")
     const [isDatePickerVisisble, setDatePickerVisible] = useState(false)
     const [chosenDate, setChosenDate] = useState()
 
@@ -45,34 +45,26 @@ export default AddTask = (props) =>{
 
     //Her defineres brugeroprettelsesknappen, som aktiverer handleSubmit igennem onPress
     const renderButton = () => {
-        return <Button onPress={() => handleSubmit()} title="Log in" />;
+        return <Button onPress={() => handleAddTask()} title="Tilføj pligt" />;
     };
 
     const handleConfirm = (date) => {
-        setChosenDate(new Date(date.setHours(date.getHours()+1)))
+        setChosenDate(JSON.stringify(new Date(date.setHours(date.getHours()+1))))
         setDatePickerVisible(false)
-        console.log(date)
+        console.log("cd " + chosenDate)
 
+        
     }
+
     const handleAddTask = () => {
         console.log(specificUserRef)
         specificUserRef.child('liste').push({
-                'pligt': task
+                'titel': titel,
+                'beskrivelse': beskrivelse,
+                'tidspunkt': chosenDate
             }
         )
-        Keyboard.dismiss();
-        setTaskItems([...taskItems, task])
-        setTask(null)
-
     }
-    const handleSubmit = async () => {
-        //Her skal der blot skubbes op i listen, se todolist
-
-        try {
-            await firebase.auth().signInWithEmailAndPassword(email, password).then(async data => {await storeData(JSON.stringify(data.user.uid)).then(nav.navigate("AppScreen"))}) //Skal ske efter error er fanget, for at undgå at man bliver smidt videre uden at være logget ind
-        } catch(error) {
-            setErrorMessage(error.message)
-    }}
 
     return (
         <View>
