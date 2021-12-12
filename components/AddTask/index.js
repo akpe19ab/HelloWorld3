@@ -39,7 +39,7 @@ export default AddTask = (props) =>{
         console.log(userId)//Fanger userId, gemt i LoginForm
         setSpecificUserId(userId) //Egentlig overflødig, beholdes for nu
         setLoading(false)
-        setSpecificUserRef(firebase.database().ref(`user/${userId.replace(/['"]+/g, '')}`)) //Sætter en global userRef til den bruger der er logget ind
+        setSpecificUserRef(firebase.database().ref(`user/${userId.replace(/['"]+/g, '')}/liste`)) //Sætter en global userRef til den bruger der er logget ind
 
     }
 
@@ -49,16 +49,21 @@ export default AddTask = (props) =>{
     };
 
     const handleConfirm = (date) => {
-        setChosenDate(JSON.stringify(new Date(date.setHours(date.getHours()+1))))
+        setChosenDate(JSON.stringify(new Date(date.setHours(date.getHours()+1)).getTime()))
         setDatePickerVisible(false)
-        console.log("cd " + chosenDate)
+        let dummyDate = new Date()
+        dummyDate.setHours(dummyDate.getHours()+1)
+        let tidIndtil = chosenDate - dummyDate.getTime()
+        console.log("chosenDate " + chosenDate)
+        console.log("tidIndtil" + tidIndtil)
+        console.log(new Date())
 
-        
+
     }
 
     const handleAddTask = () => {
         console.log(specificUserRef)
-        specificUserRef.child('liste').push({
+        specificUserRef.child(`${titel}`).set({
                 'titel': titel,
                 'beskrivelse': beskrivelse,
                 'tidspunkt': chosenDate

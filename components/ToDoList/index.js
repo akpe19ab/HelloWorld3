@@ -31,6 +31,13 @@ function ToDoList(props) {
         fetchUser();
         },[]
     )
+
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+            console.log("velkommen")
+        })
+    },[])
+
     useEffect(async () => { //Funktion der skal hente ToDoList itemsne
         if (typeof specificUserRef !== "undefined") {
             //Inde i denne funktion er vi sikre på, at specificUserId er hentet
@@ -51,6 +58,8 @@ function ToDoList(props) {
 
     }, [specificUserRef])
 
+
+
     const fetchUser = async () => {
         setLoading(true)
         console.log("loader")
@@ -62,24 +71,6 @@ function ToDoList(props) {
   
     }
 
-    const handleAddTask = () => {
-        console.log(specificUserRef)
-        specificUserRef.child('liste').push({
-            'pligt': task
-        }
-    )
-        Keyboard.dismiss();
-        setTaskItems([...taskItems, task])
-        setTask(null)
-
-    }
-
-    const completeTask2 = (index) => {
-        let itemsCopy = [...taskItems];
-        itemsCopy.splice(index, 1);
-        setTaskItems(itemsCopy);
-
-    }
     const completeTask = index => {
         console.log("hej")
 console.log(getData())
@@ -87,7 +78,7 @@ console.log(getData())
         /*Her søger vi direkte i vores array af biler og finder bil objektet som matcher idet vi har tilsendt*/
        let  ItemName = taskItemsFull[index]
        
-        navigation.navigate("taskDetails", {ItemName })
+        navigation.navigate("TaskDetails", {ItemName })
     };
     return (
         <View style={styles.container}>
