@@ -1,17 +1,17 @@
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Text, Button, ScrollView, View, ImageBackground} from "react-native";
-
+import {createNativeStackNavigator} from "@react-navigation/native-stack"
 //Importerer komponenter
 import ToDoList from '../ToDoList';
-
+import AddTask from '../AddTask';
 export default AppScreen = () => {
-    const Tab = createBottomTabNavigator()
+    const Stack = createNativeStackNavigator()
     return (
-        <Tab.Navigator
-            initialRouteName="ToDoList"
-        >
-            <Tab.Screen name="ToDoList" component={ToDoList}/>
-        </Tab.Navigator>
+        <Stack.Navigator
+            initialRouteName="ToDoList">
+            <Stack.Screen name="ToDoList" component={ToDoList} options={{ headerShown: false }}/>
+            <Stack.Screen name="AddTask" component={AddTask} options={{ headerShown: false }}/>
+        </Stack.Navigator>
     )
 }

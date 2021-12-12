@@ -5,7 +5,7 @@ import Task from './Task'
 import firebase from 'firebase/compat/app'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { UserInterfaceIdiom } from "expo-constants";
-
+import {useNavigation} from "@react-navigation/native"
 
 const getData = async () => {
     try {
@@ -19,6 +19,7 @@ const getData = async () => {
 }
 
 function ToDoList(props) {
+    const navigation = useNavigation()
     const [task, setTask] = useState()
     const [taskItems, setTaskItems] = useState([])
     const [loading, setLoading]= useState(true)
@@ -100,7 +101,7 @@ function ToDoList(props) {
                 behavior={Platform.OS === "ios" ? "padding" : "height"}
                 style={styles.writeTaskWrapper}>
                 <TextInput style={styles.input} placeholder={'Write a task'} value={task} onChangeText={text=> setTask(text)}></TextInput>
-                <TouchableOpacity onPress={() => handleAddTask()}>
+                <TouchableOpacity onPress={() => navigation.navigate("AddTask")}>
 <View style={styles.addWrapper}>
 <Text style={styles.addText}>+</Text>
 </View>

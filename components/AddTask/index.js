@@ -1,39 +1,47 @@
-import  React, {useState } from 'react'
-import { View, Text, TextInput, Button, Alert } from 'react-native'
+import React,{useState, useEffect} from "react"
 import styles from './styles'
 import firebase from 'firebase/compat/app'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
-
-//Importerer komponenter
-import StylesButton from '../StylesButton';
-
-const storeData = async (value) => {
-    try {
-        await AsyncStorage.setItem('@uid', value)
-
-    } catch (e) {
-        // saving error
-    }
-}
+import { View, Text, TextInput, Button, Alert } from 'react-native'
 
 const getData = async () => {
     try {
-        const value = await AsyncStorage.getItem('@uid')
+        const value = AsyncStorage.getItem('@uid')
         if(value !== null) {
-           console.log("getDataValue Loginform " + value)
+            return value
         }
     } catch(e) {
         // error reading value
     }
 }
-
-export default SignUpForm = (props) =>{
+export default AddTask = (props) =>{
     const nav = useNavigation()
-    const [email, setEmail] = useState('1@c.com')
-    const [password, setPassword] = useState('123456')
+    const [titel, setTitel] = useState('')
+    const [beskrivelse, setBeskrivelse] = useState('')
     const [isCompleted, setCompleted] = useState(false) //Note, ved ikke hvad den her skal bruges til. (Hentet fra øvelse 4)
     const [errorMessage, setErrorMessage] = useState(null)
+    const [loading, setLoading] = useState(true)
+    const [specificUserId, setSpecificUserId] = useState("")
+    const [speficicUserRef, setSpecificUserRef] = useState("")
+
+    useEffect(()=>{
+
+        fetchUser()
+    },[])
+
+    const fetchUser = async () => {
+        setLoading(true)
+        console.log("loader")
+        let userId = await getData()
+        console.log(userId)//Fanger userId, gemt i LoginForm
+        setSpecificUserId(userId) //Egentlig overflødig, beholdes for nu
+        setLoading(false)
+        setSpecificUserRef(firebase.database().ref(`user/${userId.replace(/['"]+/g, '')}`)) //Sætter en global userRef til den bruger der er logget ind
+
+    }
+
+
 
     //Her defineres brugeroprettelsesknappen, som aktiverer handleSubmit igennem onPress
     const renderButton = () => {
@@ -48,23 +56,23 @@ export default SignUpForm = (props) =>{
             await firebase.auth().signInWithEmailAndPassword(email, password).then(async data => {await storeData(JSON.stringify(data.user.uid)).then(nav.navigate("AppScreen"))}) //Skal ske efter error er fanget, for at undgå at man bliver smidt videre uden at være logget ind
         } catch(error) {
             setErrorMessage(error.message)
-        } 
+        }
     }
 
     return (
         <View>
-            <Text>Login</Text>
+            <Text>Titel</Text>
             <TextInput
-                placeholder="email"
-                value={email}
-                onChangeText={email => setEmail(email)}
+                placeholder="titel"
+                value={titel}
+                onChangeText={titel => setTitel(titel)}
                 style={styles.inputField}
             />
+            <Text>Beskrivelse</Text>
             <TextInput
-                placeholder="password"
-                value={password}
-                onChangeText={pw => setPassword(pw)}
-                secureTextEntry
+                placeholder="Beskrivelse"
+                value={beskrivelse}
+                onChangeText={beskrivelse => setBeskrivelse(beskrivelse)}
                 style={styles.inputField}
             />
             {errorMessage && (
