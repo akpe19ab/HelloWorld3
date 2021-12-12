@@ -25,7 +25,7 @@ function HomeScreen() {
             <View style={styles.buttonsContainer}>
                 <ScrollView>
                     <StylesButton
-                    type="secondary"
+                    type="primary"
                     content={"Tilmeld dig som forældre!"}
                     navigateTo={"SignUpForm"}
                     />

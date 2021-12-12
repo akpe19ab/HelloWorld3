@@ -14,10 +14,12 @@ export default ChildLogin = () => {
     const handleSubmit = async () => {
         try {
             const test3 = await userRef.get()
+            let user
             test3.forEach(function(childNodes){
                 if(kode==childNodes.val().key){
                     console.log("NANI")
-                    console.log(childNodes)
+                    user = childNodes
+                    console.log(user)
                 }
 
             });

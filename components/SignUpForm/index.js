@@ -6,7 +6,6 @@ import auth from 'firebase/compat/auth'
 
 export default SignUpForm = (props) =>{
 
-    const parent = props.parent
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [isCompleted, setCompleted] = useState(false) //Note, ved ikke hvad den her skal bruges til. (Hentet fra øvelse 4)
@@ -27,19 +26,20 @@ export default SignUpForm = (props) =>{
                 const knumber = Math.floor(10000 + Math.random() * 900000)
                 await userRef.child(`${data.user.uid}`).set({
                     uid: data.user.uid,
-                    actor: parent,
                     key: knumber
-                })//Virker ikke helt endnu, men i princippet kan man arbejde med brugerens reference i RT_databasen
+                }).then(
+                    Alert.alert("Bruger oprettet.")
+                )
 
             })
         } catch(error) {
             setErrorMessage(error.message)
-        } 
+        }
     }
 
     return (
         <View>
-            <Text>Opret dig som {parent ? "forælder" : "barn"}</Text>
+            <Text> Opret dig som forælder </Text>
             <TextInput
                 placeholder="email"
                 value={email}

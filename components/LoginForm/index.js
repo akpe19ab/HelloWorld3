@@ -11,8 +11,6 @@ import StylesButton from '../StylesButton';
 const storeData = async (value) => {
     try {
         await AsyncStorage.setItem('@uid', value)
-        console.log(getData())
-        console.log(value)
 
     } catch (e) {
         // saving error
@@ -23,7 +21,7 @@ const getData = async () => {
     try {
         const value = await AsyncStorage.getItem('@uid')
         if(value !== null) {
-           console.log(value)
+           console.log("getDataValue Loginform " + value)
         }
     } catch(e) {
         // error reading value
@@ -47,7 +45,7 @@ export default SignUpForm = (props) =>{
 
     const handleSubmit = async () => {
         try {
-            await firebase.auth().signInWithEmailAndPassword(email, password).then(data => {storeData(JSON.stringify(data.user.uid)).then(nav.navigate("AppScreen"))}) //Skal ske efter error er fanget, for at undgå at man bliver smidt videre uden at være logget ind
+            await firebase.auth().signInWithEmailAndPassword(email, password).then(async data => {await storeData(JSON.stringify(data.user.uid)).then(nav.navigate("AppScreen"))}) //Skal ske efter error er fanget, for at undgå at man bliver smidt videre uden at være logget ind
         } catch(error) {
             setErrorMessage(error.message)
         } 

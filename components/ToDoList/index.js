@@ -4,6 +4,7 @@ import styles from './styles'
 import Task from './Task'
 import firebase from 'firebase/compat/app'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { UserInterfaceIdiom } from "expo-constants";
 
 
 const getData = async () => {
@@ -16,40 +17,56 @@ const getData = async () => {
         // error reading value
     }
 }
-const getValue = async() => {
-    const value = await getData()
-    return value
-}
 
 function ToDoList(props) {
     const [task, setTask] = useState()
     const [taskItems, setTaskItems] = useState([])
-    
-    let wow = JSON.stringify(getData())
-    const [specificUserId, setSpecificUserId] = useState(wow)
-    useEffect(() => {
+    const [loading, setLoading]= useState(true)
+    const [specificUserRef, setSpecificUserRef] = useState()
+
+    const [specificUserId, setSpecificUserId] = useState()
+    useEffect(() => {//Funktion der henter den nuværende bruger
         fetchUser();
         },[]
     )
-    useEffect(() => {
-        console.log('render'+ specificUserId)
-    }, ["render" + specificUserId])
-const fetchUser = async() => {
-    let userId = await getData()
-    await setSpecificUserId(userId)
-    console.log(userId)
-}
+    useEffect(async () => { //Funktion der skal hente ToDoList itemsne
+        if (typeof specificUserRef !== "undefined") {
+            //Inde i denne funktion er vi sikre på, at specificUserId er hentet
+            //Herfra kan vi således hente de relevante pligter
+            console.log("UE2 " + specificUserId)
+            console.log("UE2 " + specificUserRef)
+
+            const test = await specificUserRef.get()
+            let liste
+            test.forEach(childNodes => {
+                childNodes.forEach(childChildNodes => {
+                    console.log(childChildNodes.val()["pligt"])
+                    setTaskItems(prevTaskItems => [...prevTaskItems, childChildNodes.val()["pligt"]])
+                })
+            })
+        }
+
+    }, [specificUserRef])
+
+    const fetchUser = async () => {
+        setLoading(true)
+        console.log("loader")
+        let userId = await getData() //Fanger userId, gemt i LoginForm
+        setSpecificUserId(userId) //Egentlig overflødig, beholdes for nu
+        setLoading(false)
+        setSpecificUserRef(firebase.database().ref(`user/${userId.replace(/['"]+/g, '')}`)) //Sætter en global userRef til den bruger der er logget ind
+  
+    }
+
     const handleAddTask = () => {
-        const specificUserRef = firebase.database().ref(`user/${specificUserId.replace(/['"]+/g, '')}`)
         console.log(specificUserRef)
         specificUserRef.child('liste').push({
-            'liste': task
+            'pligt': task
         }
     )
         Keyboard.dismiss();
         setTaskItems([...taskItems, task])
         setTask(null)
-        getData().then(console.log)
 
     }
 
