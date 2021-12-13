@@ -28,7 +28,7 @@ const getData = async () => {
     }
 }
 
-export default SignUpForm = (props) =>{
+export default SignUpForm = (props, {route, navigation}) =>{
     const nav = useNavigation()
     const [email, setEmail] = useState('1@c.com')
     const [password, setPassword] = useState('123456')
@@ -45,7 +45,10 @@ export default SignUpForm = (props) =>{
 
     const handleSubmit = async () => {
         try {
-            await firebase.auth().signInWithEmailAndPassword(email, password).then(async data => {await storeData(JSON.stringify(data.user.uid)).then(nav.navigate("AppScreen"))}) //Skal ske efter error er fanget, for at undgå at man bliver smidt videre uden at være logget ind
+            await firebase.auth().signInWithEmailAndPassword(email, password).then(async data => nav.navigate("AppScreen", {
+                screen: "ToDoList",
+                params: {uid: data.user.uid}
+            })) //Skal ske efter error er fanget, for at undgå at man bliver smidt videre uden at være logget ind
         } catch(error) {
             setErrorMessage(error.message)
         } 

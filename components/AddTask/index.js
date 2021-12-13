@@ -16,7 +16,7 @@ const getData = async () => {
         // error reading value
     }
 }
-export default AddTask = (props) =>{
+export default AddTask = ({route, navigation}) =>{
     const nav = useNavigation()
     const [titel, setTitel] = useState('')
     const [beskrivelse, setBeskrivelse] = useState('')
@@ -29,46 +29,39 @@ export default AddTask = (props) =>{
     const [chosenDate, setChosenDate] = useState()
 
     useEffect(()=>{
-        fetchUser()
+        return () => {
+            setChosenDate({})
+        }
     },[])
-
-    const fetchUser = async () => {
-        setLoading(true)
-        console.log("loader")
-        let userId = await getData()
-        console.log(userId)//Fanger userId, gemt i LoginForm
-        setSpecificUserId(userId) //Egentlig overflødig, beholdes for nu
-        setLoading(false)
-        setSpecificUserRef(firebase.database().ref(`user/${userId.replace(/['"]+/g, '')}/liste`)) //Sætter en global userRef til den bruger der er logget ind
-
-    }
 
     //Her defineres brugeroprettelsesknappen, som aktiverer handleSubmit igennem onPress
     const renderButton = () => {
         return <Button onPress={() => handleAddTask()} title="Tilføj pligt" />;
     };
-
-    const handleConfirm = (date) => {
+    const dateSetter = (date) => {
         setChosenDate(JSON.stringify(new Date(date.setHours(date.getHours()+1))))
+    }
+
+    const handleConfirm = async (date) => { //Skal arbejdes med
+        await dateSetter(date)
+        console.log(chosenDate)
         setDatePickerVisible(false)
+        Alert.alert("Dato sat")
         let dummyDate = new Date()
         dummyDate.setHours(dummyDate.getHours()+1)
-        let tidIndtil = chosenDate - dummyDate.getTime()
-        console.log("chosenDate " + chosenDate)
-        console.log("tidIndtil" + tidIndtil)
-        console.log(new Date())
+        console.log(chosenDate)
+
 
 
     }
 
-    const handleAddTask = () => {
-        console.log(specificUserRef)
-        specificUserRef.child(`${titel}`).set({
-                'titel': titel,
-                'beskrivelse': beskrivelse,
-                'tidspunkt': chosenDate
-            }
-        ).then(nav.goBack())
+    const handleAddTask = async () => { //Her tilføjes et fetch-kald til ekstern server, der holder timersne
+        const uid = route.params.uid
+        await firebase.database().ref(`user/${uid}`).child(`liste/${titel}`).set({
+            'titel': titel,
+            'beskrivelse': beskrivelse,
+            'tidspunkt': chosenDate
+        }).then(nav.goBack())
     }
 
     return (
@@ -89,6 +82,13 @@ export default AddTask = (props) =>{
                 onChangeText={beskrivelse => setBeskrivelse(beskrivelse)}
                 style={styles.inputField}
             />
+            {chosenDate && (
+                <View>
+                    <Text>Den valgte dato er:</Text>
+                    <Text>{JSON.stringify(chosenDate)}</Text>
+                </View>
+                
+            )}
             <Button title={"Vælg dato"} onPress={() => setDatePickerVisible(true)}/>
             <DateTimePickerModal
                 isVisible={isDatePickerVisisble}

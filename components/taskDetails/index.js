@@ -38,9 +38,9 @@ const CarDetails = ({route,navigation}) => {
     });
     const fetchUser = async () => {
         setLoading(true)
-        console.log("loader")
+        console.log("Task Details loader")
         let userId = await getData() //Fanger userId, gemt i LoginForm
-        console.log(userId)
+        console.log("Task Details " + userId)
         setSpecificUserId(userId) //Egentlig overflødig, beholdes for nu
         setLoading(false)
         setSpecificUserRef(firebase.database().ref(`user/${userId.replace(/['"]+/g, '')}`))
