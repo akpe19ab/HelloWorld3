@@ -87,8 +87,11 @@ function ToDoList({route, navigation}) {
         taskKeys = Object.keys(taskItemsFull)
     }
     console.log(taskArray)
-    
 
+    function parseISOString(s) {
+        var date = new Date(s);
+       return date.toISOString().substring(0, 10);
+    }
 
 
     return (
@@ -102,8 +105,8 @@ function ToDoList({route, navigation}) {
                         renderItem={({ item, index }) => {
                             return(
                                 <TouchableOpacity onPress={() => goToTask(taskKeys[index])}>
-                                    <Text>
-                                        {item.titel} {item.tidspunkt}
+                                    <Text style={styles.item}>
+                                        {item.titel} til {item.tidspunkt.substring(0, 10)}
                                     </Text>
                                 </TouchableOpacity>
                             )
