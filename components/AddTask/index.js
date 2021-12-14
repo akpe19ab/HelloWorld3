@@ -22,7 +22,7 @@ export default AddTask = ({route, navigation}) =>{
     const [beskrivelse, setBeskrivelse] = useState('')
     const [isCompleted, setCompleted] = useState(false) //Note, ved ikke hvad den her skal bruges til. (Hentet fra øvelse 4)
     const [errorMessage, setErrorMessage] = useState(null)
-    const [loading, setLoading] = useState(true)
+    const [opdaterer, setOpdaterer] = useState(false)
     const [specificUserId, setSpecificUserId] = useState("")
     const [specificUserRef, setSpecificUserRef] = useState("")
     const [isDatePickerVisisble, setDatePickerVisible] = useState(false)
@@ -34,6 +34,14 @@ export default AddTask = ({route, navigation}) =>{
         }
     },[])
 
+    useEffect(() => { //Kaldes når chosenDate ændres.
+        if (opdaterer) {
+            Alert.alert("Dato sat")
+            
+        }
+
+    }, [chosenDate])
+
     //Her defineres brugeroprettelsesknappen, som aktiverer handleSubmit igennem onPress
     const renderButton = () => {
         return <Button onPress={() => handleAddTask()} title="Tilføj pligt" />;
@@ -42,14 +50,15 @@ export default AddTask = ({route, navigation}) =>{
         setChosenDate(JSON.stringify(new Date(date.setHours(date.getHours()+1))))
     }
 
-    const handleConfirm = async (date) => { //Skal arbejdes med
-        await dateSetter(date)
-        console.log(chosenDate)
+    const handleConfirm = (date) => { //Skal arbejdes med¨
+        setOpdaterer(true)
+        setChosenDate(JSON.stringify(new Date(date.setHours(date.getHours()+1))))
+        console.log("addTask chosenDate " + JSON.stringify(chosenDate))
         setDatePickerVisible(false)
-        Alert.alert("Dato sat")
+
         let dummyDate = new Date()
         dummyDate.setHours(dummyDate.getHours()+1)
-        console.log(chosenDate)
+        console.log("AddTask new Date " + new Date().getTime())
 
 
 

@@ -106,7 +106,7 @@ function ToDoList({route, navigation}) {
                             return(
                                 <TouchableOpacity onPress={() => goToTask(taskKeys[index])}>
                                     <Text style={styles.item}>
-                                        {item.titel} til {item.tidspunkt.substring(0, 10)}
+                                        {item.titel} til {item.tidspunkt.substring(1, 10)} kl. {item.tidspunkt.substring(12, 20)}
                                     </Text>
                                 </TouchableOpacity>
                             )

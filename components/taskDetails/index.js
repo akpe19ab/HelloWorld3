@@ -18,39 +18,19 @@ const getData = async () => {
 
 const CarDetails = ({route,navigation}) => {
 
-    const [loading, setLoading]= useState(true)
-    const [specificUserId, setSpecificUserId] = useState()
-    const [specificUserRef, setSpecificUserRef] = useState()
+    const [task,setTask] = useState({});
 
-    const [car,setCar] = useState({});
-    useEffect(() => {//Funktion der henter den nuværende bruger
-            fetchUser();
-        },[]
-    )
     useEffect(() => {
         /*Henter car values og sætter dem*/
-        setCar(route.params.ItemName);
-
-        /*Når vi forlader screen, tøm object*/
-        return () => {
-            setCar({})
-        }
+        setTask(route.params.ItemName);
     });
-    const fetchUser = async () => {
-        setLoading(true)
-        console.log("Task Details loader")
-        let userId = await getData() //Fanger userId, gemt i LoginForm
-        console.log("Task Details " + userId)
-        setSpecificUserId(userId) //Egentlig overflødig, beholdes for nu
-        setLoading(false)
-        setSpecificUserRef(firebase.database().ref(`user/${userId.replace(/['"]+/g, '')}`))
-    }
+    /*
     const handleEdit = () => {
         // Vi navigerer videre til EditCar skærmen og sender bilen videre med
         const car = route.params.car
         navigation.navigate('Edit Car', { car });
     };
-
+    */
     // Vi spørger brugeren om han er sikker
     const confirmDelete = () => {
         /*Er det mobile?*/
@@ -63,14 +43,14 @@ const CarDetails = ({route,navigation}) => {
         }
     };
 
-    // Vi sletter den aktuelle bil
+    // Vi sletter den aktuelle opgave
     const  handleDelete = () => {
         const id = route.params.ItemName["titel"];
         console.log("test")
        console.log(id)
 
         try {
-            specificUserRef.child(`liste/${id}`).remove()
+            firebase.database().ref(`user/${route.params.specificUserId}`).child(`liste/${id}`).remove()
 
             // Og går tilbage når det er udført
             navigation.goBack();
@@ -80,7 +60,7 @@ const CarDetails = ({route,navigation}) => {
     };
 
 
-    if (!car) {
+    if (!task) {
         return <Text>No data</Text>;
     }
 
@@ -91,7 +71,7 @@ const CarDetails = ({route,navigation}) => {
             <Button title="Edit" onPress={ () => handleEdit()} />
             <Button title="Delete" onPress={() => confirmDelete()} />
             {
-                Object.entries(car).map((item,index)=>{
+                Object.entries(task).map((item,index)=>{
                     return(
                         <View style={styles.row} key={index}>
                             {/*Vores car keys navn*/}
