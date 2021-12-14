@@ -94,7 +94,7 @@ function ToDoList({route, navigation}) {
     return (
         <View style={styles.container}>
             <View style={styles.tasksWrapper}>
-                <Text style={styles.sectionTitle}>Today's tasks</Text>
+
                 <View style={styles.items}>
                     <FlatList
                         data={taskArray}
@@ -103,7 +103,7 @@ function ToDoList({route, navigation}) {
                             return(
                                 <TouchableOpacity onPress={() => goToTask(taskKeys[index])}>
                                     <Text style={styles.item}>
-                                        {item.titel} til {item.tidspunkt.substring(1, 11)} kl. {item.tidspunkt.substring(12, 20)}
+                                        {item.titel} til {item.tidspunkt.substring(1, 11)} kl. {item.tidspunkt.substring(12, 17)}
                                     </Text>
                                 </TouchableOpacity>
                             )

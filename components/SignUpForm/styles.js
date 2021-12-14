@@ -1,12 +1,34 @@
 import {StyleSheet} from "react-native";
 
 const styles = StyleSheet.create({
+    inputField: {
+        borderWidth: 1,
+        margin: 10,
+        padding: 10,
+        borderWidth: 1,
+        borderRadius: 15,
+        width: '80%',
+
+    },
+    error: {
+        color: 'white',
+    },
     container:{
 
-            flex: 1,
-            display: 'flex',
-            justifyContent: 'center'
+        flex: 1,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
 
+
+
+    },
+    image:{
+
+        position: 'absolute',
+        width: "100%",
+        height: "100%",
+        resizeMode: 'cover'
 
     },
     button: {
@@ -14,6 +36,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 20,
+        width: '80%',
+        position: 'relative',
 
 
     },
@@ -21,32 +45,6 @@ const styles = StyleSheet.create({
         fontSize: 12,
         fontWeight: '500',
         color: "#003b4f"
-    },
-    inputField: {
-        borderWidth: 1,
-        margin: 10,
-        padding: 10,
-        color: "#FFF"
-    },
-    error: {
-        color: 'red',
-    },
-    image:{
-
-position: 'absolute',
-        width: "100%",
-        height: "100%",
-resizeMode: 'cover'
-
-    },  buttonsContainer:{
-        position: 'absolute',
-        width: '100%',
-        bottom: 300
-    },
-    space: {
-        width: 20, // or whatever size you need
-        height: 20,
-    },
+    }
 });
 export default styles
-

@@ -3,7 +3,7 @@ import {StyleSheet} from "react-native";
 const styles = StyleSheet.create({
   container:{
       flex: 1,
-      backgroundColor: '#E8EAED',
+      backgroundColor: '#FFF',
 
   },
     taskWrapper: {
@@ -15,13 +15,14 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     item: {
-    backgroundColor: '#FFF',
+    backgroundColor: '#003b4f',
     padding:15,
     borderRadius: 10,
     flexDirection: 'row',
     alignItems: 'center' ,
     justifyContent: 'space-between' ,
-    marginBottom: 20,},
+    marginBottom: 20,
+    color: "#FFF"},
   sqaure: {
     width: 24,
     height: 24,
@@ -72,8 +73,8 @@ flexDirection: 'row',
     borderRadius: 60,
     justifyContent: 'center',
     alignItems: 'center',
-    borderColor: '#C0C0C0',
-    borderWidth: 1
+    borderColor: '#C0C0C0'
+
   }
 });
 export default styles
