@@ -10,8 +10,8 @@ const StylesButton = (props) =>{
     const nav = useNavigation()
     const {type, content, navigateTo} = props
     
-    const backgroundColor = type ==='primary' ? 'black' : 'white';
-    const textColor = type === 'primary' ? 'white':'black';
+    const backgroundColor = type ==='primary' ? '#FFF' : '#485634';
+    const textColor = type === 'primary' ? '#003b4f':'black';
 
     return (
         <View style={styles.container}>

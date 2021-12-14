@@ -1,9 +1,9 @@
 import  React, {useState } from 'react'
-import { View, Text, TextInput, Button, Alert } from 'react-native'
+import { View, Text, TextInput, Button, Alert, ImageBackground , ScrollView, Pressable} from 'react-native'
 import styles from './styles'
 import firebase from 'firebase/compat/app'
 import auth from 'firebase/compat/auth'
-
+import StylesButton from "../StylesButton";
 export default SignUpForm = (props) =>{
 
     const [email, setEmail] = useState('')
@@ -13,7 +13,7 @@ export default SignUpForm = (props) =>{
 
     //Her defineres brugeroprettelsesknappen, som aktiverer handleSubmit igennem onPress
     const renderButton = () => {
-        return <Button onPress={() => handleSubmit()} title="Opret forælder" />;
+        return <Pressable onPress={() => handleSubmit()}  style={[styles.button, {backgroundColor: "#FFF"}]} ><Text style={styles.text}> Opret din konto</Text></Pressable>;
     };
 
     //Sætter en userRef, da vi gerne vil have en liste over vores brugere, hvor der også kan tilføjes attributter såsom om de er forældre eller børn.
@@ -38,25 +38,42 @@ export default SignUpForm = (props) =>{
     }
 
     return (
-        <View>
-            <Text> Opret dig som forælder </Text>
+
+        <View style={styles.container}>
+                <ImageBackground
+                    source={require('../../assets/images/good.jpg')}
+                    style={styles.image}
+                    resizeMode="cover"
+                />
+
+
             <TextInput
-                placeholder="email"
+                placeholder="Skrev din email her"
                 value={email}
                 onChangeText={email => setEmail(email)}
                 style={styles.inputField}
+                placeholderTextColor='#FFF'
+                textAlign='center'
+                borderColor="#FFF"
             />
             <TextInput
-                placeholder="Kodeord"
+                placeholder="Skrev dit ønskede kodeord her"
                 value={password}
                 onChangeText={pw => setPassword(pw)}
                 secureTextEntry
                 style={styles.inputField}
+                placeholderTextColor='#FFF'
+                textAlign='center'
+                borderColor="#FFF"
             />
+
             {errorMessage && (
                 <Text style={styles.error}>Error: {errorMessage}</Text>
             )}
             {renderButton()}
+
+
+
         </View>
     );
 };

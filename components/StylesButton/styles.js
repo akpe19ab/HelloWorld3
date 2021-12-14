@@ -2,8 +2,11 @@ import {StyleSheet} from "react-native";
 
 const styles = StyleSheet.create({
     container:{
-        width: '100%',
+        width: '80%',
         padding: 10,
+        justifyContent: 'center',
+        alignSelf: 'center',
+
     },
     button: {
         height: 40,
@@ -11,11 +14,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 20,
         flex: 1,
+
     },
     text: {
-        fontSize: 12,
+        fontFamily: 'sans-serif',
+        fontSize: 14,
         fontWeight: '500',
-        textTransform: 'uppercase',
+
     }
 });
 export default styles

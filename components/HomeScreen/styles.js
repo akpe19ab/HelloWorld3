@@ -19,15 +19,19 @@ const styles = StyleSheet.create({
     },
     image:{
         resizeMode: 'cover',
-        position: 'absolute',
         width: "100%",
         height: "100%",
-        flex: 1,
+
     },
     buttonsContainer:{
         position: 'absolute',
         width: '100%',
-    }
+        bottom: 300
+    },
+    space: {
+        width: 20, // or whatever size you need
+        height: 20,
+    },
     });
 export default styles
 

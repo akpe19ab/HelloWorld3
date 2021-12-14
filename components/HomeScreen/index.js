@@ -11,8 +11,9 @@ function HomeScreen() {
     return (
         <View>
                 <ImageBackground
-                source={require('../../assets/images/child2.jpeg')}
+                source={require('../../assets/images/good.jpg')}
                 style={styles.image}
+                resizeMode="cover"
             />
 
             <View style={styles.titles}>
@@ -26,25 +27,24 @@ function HomeScreen() {
                 <ScrollView>
                     <StylesButton
                     type="primary"
-                    content={"Tilmeld dig som forældre!"}
+                    content={"Opret dig som forældre"}
                     navigateTo={"SignUpForm"}
                     />
-
+                    <View style={styles.space} />
                     <StylesButton
                         type="primary"
-                        content={"Login som barn"}
+                        content={"Opret dig som barn"}
                         navigateTo={"ChildLogin"}
                     />
+                    <View style={styles.space} />
                     <StylesButton
                         type="primary"
-                        content="Login som forælder"
-                        navigateTo="LoginForm"
+                        content="Login for forældre"
+                        navigateTo={"LoginForm"}
                     />
-                    <StylesButton
-                        type="primary"
-                        content="Huskelisten (temporary)"
-                        navigateTo={"ToDoList"}
-                    />
+
+
+
                 </ScrollView>
             </View>
         </View>
