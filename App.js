@@ -65,11 +65,28 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Home"
+        initialRouteName="Børnenes Huskeliste"
       >
         <Stack.Screen name="TaskDetails" component={TaskDetails}/>
-        <Stack.Screen name="Home" component={HomeScreen}/>
-        <Stack.Screen name="SignUpForm" component={SignUpForm}/>
+        <Stack.Screen name="Børnenes Huskeliste" component={HomeScreen}  options={{
+          headerStyle: {
+            backgroundColor: '#003b4f',
+          },
+          headerTintColor: '#FFF',
+            headerTitleAlign: 'center'
+
+
+        }}/>
+        <Stack.Screen name="SignUpForm" component={SignUpForm} options={{
+          title: "Opret dig som forældre",
+          headerStyle: {
+            backgroundColor: '#003b4f',
+          },
+          headerTintColor: '#FFF',
+          headerTitleAlign: 'center'
+
+
+        }}/>
         <Stack.Screen name="ChildLogin" component={ChildLogin}/>
         <Stack.Screen name="LoginForm" component={LoginForm}/>
         <Stack.Screen name="AppScreen" component={AppScreen}/>
