@@ -30,7 +30,7 @@ const getData = async () => {
 
 export default SignUpForm = (props, {route, navigation}) =>{
     const nav = useNavigation()
-    const [email, setEmail] = useState('1@c.com')
+    const [email, setEmail] = useState('1@d.com')
     const [password, setPassword] = useState('123456')
     const [isCompleted, setCompleted] = useState(false) //Note, ved ikke hvad den her skal bruges til. (Hentet fra øvelse 4)
     const [errorMessage, setErrorMessage] = useState(null)

@@ -7,7 +7,6 @@ import { View, Text, TextInput, Button, Alert } from 'react-native';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 export default AddTask = ({route, navigation}) =>{
-    const nav = useNavigation()
     const [titel, setTitel] = useState('')
     const [beskrivelse, setBeskrivelse] = useState('')
     const [isCompleted, setCompleted] = useState(false) //Note, ved ikke hvad den her skal bruges til. (Hentet fra øvelse 4)
@@ -27,7 +26,7 @@ export default AddTask = ({route, navigation}) =>{
         if(chosenDate) {
             Alert.alert("DATO VALGT")
             console.log("ADDTASK CHOSENDATE USEEFFECT GETTIME")
-            console.log(chosenDate.getTime())
+            console.log(chosenDate.getTime() - new Date().getTime())
         }
         
     }, [chosenDate])
@@ -43,14 +42,30 @@ export default AddTask = ({route, navigation}) =>{
     }
 
     const handleAddTask = async () => { //Her tilføjes et fetch-kald til ekstern server, der holder timersne
+        let task = {
+            'titel': titel,
+            'beskrivelse:': beskrivelse,
+            'tidspunkt': JSON.stringify(chosenDate)
+        }
         const uid = route.params.uid
         console.log("ADDTASK HANDLEADDTASK DATE")
         console.log(chosenDate)
-        await firebase.database().ref(`user/${uid}`).child(`liste/${titel}`).set({
-            'titel': titel,
-            'beskrivelse': beskrivelse,
-            'tidspunkt': JSON.stringify(chosenDate)
-        }).then(nav.goBack())
+        await firebase.database().ref(`user/${uid}`).child(`liste/${titel}`).set(task).then(async () => {
+            await fetch('https://clever-swan-79.loca.lt/postTimer', {
+                method: "POST",
+                header: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    uid: uid,
+                    task: task,
+                    tidIndtil: chosenDate.getTime() - new Date().getTime()
+                })
+            }).then((response) => {
+                navigation.goBack();
+            })
+        })
     }
 
     return (
