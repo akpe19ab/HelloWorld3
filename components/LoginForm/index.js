@@ -47,7 +47,7 @@ export default SignUpForm = (props, {route, navigation}) =>{
         try {
             await firebase.auth().signInWithEmailAndPassword(email, password).then(async data => nav.navigate("AppScreen", {
                 screen: "ToDoList",
-                params: {uid: data.user.uid}
+                params: {uid: data.user.uid, parent: true}
             })) //Skal ske efter error er fanget, for at undgå at man bliver smidt videre uden at være logget ind
         } catch(error) {
             setErrorMessage(error.message)

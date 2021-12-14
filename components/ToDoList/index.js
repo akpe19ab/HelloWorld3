@@ -17,7 +17,8 @@ function ToDoList({route, navigation}) {
     const [value, setValue] = useState(0);
     const [specificUserId, setSpecificUserId] = useState()
 
-    useEffect(async () => {//Funktion der henter den nuværende bruger
+    useEffect(async () => {//Funktion der henter den nuværende brugers opgaver
+        console.log(route.params.parent)
         const uid = route.params.uid
         await firebase.database().ref(`user/${uid}/liste`).on("value", (snapshot => {
             setTaskItemsFull(snapshot.val())
@@ -86,13 +87,9 @@ function ToDoList({route, navigation}) {
         taskArray = Object.values(taskItemsFull)
         taskKeys = Object.keys(taskItemsFull)
     }
-    console.log(taskArray)
-
-    function parseISOString(s) {
-        var date = new Date(s);
-       return date.toISOString().substring(0, 10);
-    }
-
+    console.log("TASK KEYS")
+    console.log(taskKeys)
+    console.log("TASK KEYS SLUT")
 
     return (
         <View style={styles.container}>
@@ -106,7 +103,7 @@ function ToDoList({route, navigation}) {
                             return(
                                 <TouchableOpacity onPress={() => goToTask(taskKeys[index])}>
                                     <Text style={styles.item}>
-                                        {item.titel} til {item.tidspunkt.substring(1, 10)} kl. {item.tidspunkt.substring(12, 20)}
+                                        {item.titel} til {item.tidspunkt.substring(1, 11)} kl. {item.tidspunkt.substring(12, 20)}
                                     </Text>
                                 </TouchableOpacity>
                             )
@@ -129,11 +126,13 @@ function ToDoList({route, navigation}) {
 
                 </View>*/}
             </View>
-            <TouchableOpacity onPress={() => navigation.navigate("AddTask", {uid: route.params.uid})}>
-                <View style={styles.addWrapper}>
-                    <Text style={styles.addText}>+</Text>
-                </View>
-            </TouchableOpacity>
+            {route.params.parent && (
+                <TouchableOpacity onPress={() => navigation.navigate("AddTask", {uid: route.params.uid})}>
+                    <View style={styles.addWrapper}>
+                        <Text style={styles.addText}>+</Text>
+                    </View>
+                </TouchableOpacity>
+            )}
         </View>
     );
 }

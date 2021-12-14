@@ -6,16 +6,6 @@ import {useNavigation} from '@react-navigation/native';
 import { View, Text, TextInput, Button, Alert } from 'react-native';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
-const getData = async () => {
-    try {
-        const value = AsyncStorage.getItem('@uid')
-        if(value !== null) {
-            return value
-        }
-    } catch(e) {
-        // error reading value
-    }
-}
 export default AddTask = ({route, navigation}) =>{
     const nav = useNavigation()
     const [titel, setTitel] = useState('')
@@ -28,48 +18,38 @@ export default AddTask = ({route, navigation}) =>{
     const [isDatePickerVisisble, setDatePickerVisible] = useState(false)
     const [chosenDate, setChosenDate] = useState()
 
-    useEffect(()=>{
-        return () => {
-            setChosenDate({})
-        }
-    },[])
-
-    useEffect(() => { //Kaldes når chosenDate ændres.
-        if (opdaterer) {
-            Alert.alert("Dato sat")
-            
-        }
-
-    }, [chosenDate])
-
     //Her defineres brugeroprettelsesknappen, som aktiverer handleSubmit igennem onPress
     const renderButton = () => {
         return <Button onPress={() => handleAddTask()} title="Tilføj pligt" />;
     };
-    const dateSetter = (date) => {
-        setChosenDate(JSON.stringify(new Date(date.setHours(date.getHours()+1))))
-    }
+
+    useEffect(() => {
+        if(chosenDate) {
+            Alert.alert("DATO VALGT")
+            console.log("ADDTASK CHOSENDATE USEEFFECT GETTIME")
+            console.log(chosenDate.getTime())
+        }
+        
+    }, [chosenDate])
+
 
     const handleConfirm = (date) => { //Skal arbejdes med¨
-        setOpdaterer(true)
-        setChosenDate(JSON.stringify(new Date(date.setHours(date.getHours()+1))))
-        console.log("addTask chosenDate " + JSON.stringify(chosenDate))
+        setChosenDate(new Date(date.setHours(date.getHours()+1)))
         setDatePickerVisible(false)
 
         let dummyDate = new Date()
         dummyDate.setHours(dummyDate.getHours()+1)
-        console.log("AddTask new Date " + new Date().getTime())
-
-
 
     }
 
     const handleAddTask = async () => { //Her tilføjes et fetch-kald til ekstern server, der holder timersne
         const uid = route.params.uid
+        console.log("ADDTASK HANDLEADDTASK DATE")
+        console.log(chosenDate)
         await firebase.database().ref(`user/${uid}`).child(`liste/${titel}`).set({
             'titel': titel,
             'beskrivelse': beskrivelse,
-            'tidspunkt': chosenDate
+            'tidspunkt': JSON.stringify(chosenDate)
         }).then(nav.goBack())
     }
 
