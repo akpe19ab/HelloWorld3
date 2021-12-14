@@ -87,9 +87,36 @@ export default function App() {
 
 
         }}/>
-        <Stack.Screen name="ChildLogin" component={ChildLogin}/>
-        <Stack.Screen name="LoginForm" component={LoginForm}/>
-        <Stack.Screen name="AppScreen" component={AppScreen}/>
+        <Stack.Screen name="ChildLogin" component={ChildLogin} options={{
+          title: "Opret dig som barn",
+          headerStyle: {
+            backgroundColor: '#003b4f',
+          },
+          headerTintColor: '#FFF',
+          headerTitleAlign: 'center'
+
+
+        }}/>
+        <Stack.Screen name="LoginForm" component={LoginForm}  options={{
+          title: "Log ind som forældre",
+          headerStyle: {
+            backgroundColor: '#003b4f',
+          },
+          headerTintColor: '#FFF',
+          headerTitleAlign: 'center'
+
+
+        }}/>
+        <Stack.Screen name="AppScreen" component={AppScreen} options={{
+          title: "Din huskeliste",
+          headerStyle: {
+            backgroundColor: '#003b4f',
+          },
+          headerTintColor: '#FFF',
+          headerTitleAlign: 'center'
+
+
+        }}/>
         <Stack.Screen name="ToDoList" component={ToDoList}/>
 
       </Stack.Navigator>

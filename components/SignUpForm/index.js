@@ -55,6 +55,7 @@ export default SignUpForm = (props) =>{
                 placeholderTextColor='#FFF'
                 textAlign='center'
                 borderColor="#FFF"
+                color="#FFF"
             />
             <TextInput
                 placeholder="Skrev dit ønskede kodeord her"
@@ -65,6 +66,7 @@ export default SignUpForm = (props) =>{
                 placeholderTextColor='#FFF'
                 textAlign='center'
                 borderColor="#FFF"
+                color="#FFF"
             />
 
             {errorMessage && (

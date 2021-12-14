@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { View, Text, Button, TextInput } from 'react-native';
+import { View, Text, Button, TextInput, ImageBackground, Pressable} from 'react-native';
 import firebase from 'firebase/compat/app';
 import registerForPushNotification from '../../modules/registerForPushNotification';
 
@@ -61,21 +61,32 @@ export default ChildLogin = ({navigation}) => {
     }
 
     const renderButton = () => {
-        return <Button title={"Login"} onPress={handleSubmit}/>
+        return <Pressable onPress={() => handleSubmit()}  style={[styles.button, {backgroundColor: "#FFF"}]} ><Text style={styles.text}> Opret din konto</Text></Pressable>;
     }
 
     return (
-        <View>
-            <Text>Login</Text>
+        <View style={styles.container}>
+            <ImageBackground
+                source={require('../../assets/images/good.jpg')}
+                style={styles.image}
+                resizeMode="cover"
+            />
+
+
             <TextInput
-                placeholder="kode"
+                placeholder="Indsæt koden, som du fik fra dine forældre"
                 value={kode}
                 onChangeText={kode => setKode(kode)}
                 style={styles.inputField}
+                placeholderTextColor='#FFF'
+                textAlign='center'
+                borderColor="#FFF"
+                color="#FFF"
             />
             {errorM && (
                 <Text style={styles.error}>Error: {errorM}</Text>
             )}
+
             {renderButton()}
         </View>
     )

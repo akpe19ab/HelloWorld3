@@ -1,5 +1,5 @@
 import  React, {useState } from 'react'
-import { View, Text, TextInput, Button, Alert } from 'react-native'
+import { View, Text, TextInput, Button, Alert , ImageBackground, Pressable} from 'react-native'
 import styles from './styles'
 import firebase from 'firebase/compat/app'
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -37,7 +37,7 @@ export default SignUpForm = (props, {route, navigation}) =>{
 
     //Her defineres brugeroprettelsesknappen, som aktiverer handleSubmit igennem onPress
     const renderButton = () => {
-        return <Button onPress={() => handleSubmit()} title="Log in" />;
+        return          <Pressable onPress={() => handleSubmit()}  style={[styles.button, {backgroundColor: "#FFF"}]} ><Text style={styles.text}> Log ind</Text></Pressable>;
     };
 
     //Sætter en userRef, da vi gerne vil have en liste over vores brugere, hvor der også kan tilføjes attributter såsom om de er forældre eller børn.
@@ -55,20 +55,34 @@ export default SignUpForm = (props, {route, navigation}) =>{
     }
 
     return (
-        <View>
-            <Text>Login</Text>
+        <View style={styles.container}>
+            <ImageBackground
+                source={require('../../assets/images/good.jpg')}
+                style={styles.image}
+                resizeMode="cover"
+            />
+
+
             <TextInput
-                placeholder="email"
+                placeholder="Skriv din email her"
                 value={email}
                 onChangeText={email => setEmail(email)}
                 style={styles.inputField}
+                placeholderTextColor='#FFF'
+                textAlign='center'
+                borderColor="#FFF"
+                color="#FFF"
             />
             <TextInput
-                placeholder="password"
+                placeholder="Skrev dit  kodeord her"
                 value={password}
                 onChangeText={pw => setPassword(pw)}
                 secureTextEntry
                 style={styles.inputField}
+                placeholderTextColor='#FFF'
+                textAlign='center'
+                borderColor="#FFF"
+                color="#FFF"
             />
             {errorMessage && (
                 <Text style={styles.error}>Error: {errorMessage}</Text>
