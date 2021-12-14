@@ -50,17 +50,20 @@ export default AddTask = ({route, navigation}) =>{
         const uid = route.params.uid
         console.log("ADDTASK HANDLEADDTASK DATE")
         console.log(chosenDate)
+        let tempDate = new Date()
+        let tempTempDate = new Date(tempDate.setHours(tempDate.getHours() + 1))
         await firebase.database().ref(`user/${uid}`).child(`liste/${titel}`).set(task).then(async () => {
-            await fetch('https://clever-swan-79.loca.lt/postTimer', {
+            await fetch('https://old-turtle-70.loca.lt/postTimer', {
                 method: "POST",
-                header: {
+                mode: 'cors',
+                headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
                     uid: uid,
                     task: task,
-                    tidIndtil: chosenDate.getTime() - new Date().getTime()
+                    tidIndtil: chosenDate.getTime() - tempTempDate
                 })
             }).then((response) => {
                 navigation.goBack();
