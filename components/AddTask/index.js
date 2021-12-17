@@ -53,7 +53,7 @@ export default AddTask = ({route, navigation}) =>{
         let tempDate = new Date()
         let tempTempDate = new Date(tempDate.setHours(tempDate.getHours() + 1))
         await firebase.database().ref(`user/${uid}`).child(`liste/${titel}`).set(task).then(async () => {
-            await fetch('https://old-turtle-70.loca.lt/postTimer', {
+            await fetch('https://wonderful-shrimp-9.loca.lt/postTimer', {
                 method: "POST",
                 mode: 'cors',
                 headers: {
