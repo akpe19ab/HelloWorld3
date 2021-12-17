@@ -3,7 +3,7 @@ import styles from './styles'
 import firebase from 'firebase/compat/app'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
-import { View, Text, TextInput, Button, Alert } from 'react-native';
+import { View, Text, TextInput, Button, Alert, ImageBackground } from 'react-native';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 export default AddTask = ({route, navigation}) =>{
@@ -19,7 +19,7 @@ export default AddTask = ({route, navigation}) =>{
 
     //Her defineres brugeroprettelsesknappen, som aktiverer handleSubmit igennem onPress
     const renderButton = () => {
-        return <Button onPress={() => handleAddTask()} title="Tilføj pligt" />;
+        return <Button color="#003b4f" onPress={() => handleAddTask()} title="Tilføj pligt" />;
     };
 
     useEffect(() => {
@@ -72,21 +72,35 @@ export default AddTask = ({route, navigation}) =>{
     }
 
     return (
-        <View>
-            <Text>Titel</Text>
+        <View style={styles.container}>
+            <ImageBackground
+                source={require('../../assets/images/good.jpg')}
+                style={styles.image}
+                resizeMode="cover"
+            />
             <TextInput
-                placeholder="titel"
+                placeholder="Tilføj din titel her"
                 value={titel}
+                style={styles.inputField}
                 onChangeText={titel => setTitel(titel)}
                 style={styles.inputField}
                 mode={'datetime'}
                 is24Hour={true}
+                placeholderTextColor='#FFF'
+                textAlign='center'
+                borderColor="#FFF"
+                color="#FFF"
             />
-            <Text>Beskrivelse</Text>
+
             <TextInput
                 placeholder="Beskrivelse"
                 value={beskrivelse}
                 onChangeText={beskrivelse => setBeskrivelse(beskrivelse)}
+                style={styles.inputField}
+                placeholderTextColor='#FFF'
+                textAlign='center'
+                borderColor="#FFF"
+                color="#FFF"
                 style={styles.inputField}
             />
             {chosenDate && (
@@ -96,7 +110,7 @@ export default AddTask = ({route, navigation}) =>{
                 </View>
                 
             )}
-            <Button title={"Vælg dato"} onPress={() => setDatePickerVisible(true)}/>
+            <Button title={"Vælg dato"}  color="#003b4f" onPress={() => setDatePickerVisible(true)}/>
             <DateTimePickerModal
                 isVisible={isDatePickerVisisble}
                 timeZoneOffsetInMinutes={60}

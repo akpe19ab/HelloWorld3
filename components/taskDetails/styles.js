@@ -14,12 +14,7 @@ const styles = StyleSheet.create({
         color: 'white',
     },
     container:{
-
-        flex: 1,
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center'
-
+   flex: 1, justifyContent: 'flex-start'
 
 
     },
@@ -44,7 +39,14 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 12,
         fontWeight: '500',
-        color: "#003b4f"
-    }
+        color: "#FFF"
+    },
+    row: {
+        margin: 5,
+        padding: 5,
+        flexDirection: 'row',
+    },
+    label: { width: 100, fontWeight: 'bold',color: "#FFF", fontSize: 14},
+    value: { flex: 1 , color: "#FFF", fontSize: 14},
 });
 export default styles

@@ -80,7 +80,12 @@ flexDirection: 'row',
 
   }, addText: {
     color: "#003b4f"
-  }
+  },
+  item2: {
+    marginBottom: 20,
+    color: "#003b4f",
+    fontSize:16
+    }
 
 });
 export default styles

@@ -55,7 +55,7 @@ function ToDoList({route, navigation}) {
             <View style={styles.tasksWrapper}>
 
                 <View style={styles.items}>
-                    {childKey && route.params.parent && (<Text>Dit barns kodeord er: {childKey}</Text>)}
+                    {childKey && route.params.parent && (<Text style={styles.item2}>Dit barns kodeord er: {childKey}</Text>)}
                     <FlatList
                         data={taskArray}
                         keyExtractor={(item, index) => taskKeys[index]}

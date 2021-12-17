@@ -1,9 +1,10 @@
 
 import * as React from 'react';
-import { View, Text, Platform, FlatList, StyleSheet, Button, Alert } from 'react-native';
+import { View, Text, Platform, FlatList, StyleSheet, Button, Alert, ImageBackground } from 'react-native';
 import firebase from 'firebase/compat/app';
 import {useEffect, useState} from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import styles from './styles'
 const getData = async () => {
     try {
         const value = AsyncStorage.getItem('@uid')
@@ -61,15 +62,21 @@ const CarDetails = ({route,navigation}) => {
     //all content
     return (
 
-        <View style={styles.container}>
-            {route.params.parent && (<Button title="Delete" onPress={() => confirmDelete()} />)}
+            <View style={styles.container}>
+                <ImageBackground
+                    source={require('../../assets/images/good.jpg')}
+                    style={styles.image}
+                    resizeMode="cover"
+                />
+
+                {route.params.parent && (<Button title={"Tryk her for at slette opgaven"} color="003b4f" onPress={() => confirmDelete()} />)}
             {
                 Object.entries(task).map((item,index)=>{
                     return(
                         <View style={styles.row} key={index}>
-                            {/*Vores car keys navn*/}
+                            {}
                             <Text style={styles.label}>{item[0]} </Text>
-                            {/*Vores car values navne */}
+                            {}
                             <Text style={styles.value}>{item[1]}</Text>
                         </View>
                     )
@@ -81,13 +88,3 @@ const CarDetails = ({route,navigation}) => {
 
 export default CarDetails;
 
-const styles = StyleSheet.create({
-    container: { flex: 1, justifyContent: 'flex-start' },
-    row: {
-        margin: 5,
-        padding: 5,
-        flexDirection: 'row',
-    },
-    label: { width: 100, fontWeight: 'bold' },
-    value: { flex: 1 },
-});

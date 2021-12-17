@@ -17,7 +17,16 @@ export default AppScreen = () => {
     return (
         <Stack.Navigator
             initialRouteName="ToDoList">
-            <Stack.Screen name="TaskDetails" component={TaskDetails}/>
+            <Stack.Screen name="TaskDetails" component={TaskDetails} options={{
+                title: "Gå tilbage",
+                headerStyle: {
+                    backgroundColor: '#003b4f',
+                },
+                headerTintColor: '#FFF',
+                headerTitleAlign: 'center'
+
+
+            }}/>
             <Stack.Screen name="ToDoList" component={ToDoList} options={{ headerShown: false }}/>
             <Stack.Screen name="AddTask" component={AddTask} options={{ headerShown: false }}/>
         </Stack.Navigator>
