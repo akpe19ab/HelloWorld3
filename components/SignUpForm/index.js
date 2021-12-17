@@ -48,7 +48,7 @@ export default SignUpForm = (props) =>{
 
 
             <TextInput
-                placeholder="Skrev din email her"
+                placeholder="Skriv din email her"
                 value={email}
                 onChangeText={email => setEmail(email)}
                 style={styles.inputField}
@@ -58,7 +58,7 @@ export default SignUpForm = (props) =>{
                 color="#FFF"
             />
             <TextInput
-                placeholder="Skrev dit ønskede kodeord her"
+                placeholder="Skriv dit ønskede kodeord her"
                 value={password}
                 onChangeText={pw => setPassword(pw)}
                 secureTextEntry

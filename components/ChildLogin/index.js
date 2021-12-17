@@ -8,7 +8,7 @@ import { setAutoServerRegistrationEnabledAsync } from 'expo-notifications';
 
 
 export default ChildLogin = ({navigation}) => {
-    const [kode, setKode] = useState();
+    const [kode, setKode] = useState('780563');
     const [errorM, setErrorM] = useState();
     const [token, setToken] = useState();
     const [targetParent, setTargetParent] = useState();
@@ -17,11 +17,6 @@ export default ChildLogin = ({navigation}) => {
 
     useEffect(() => { //useEffect der lader barn logge ind, så snart det er tjekket om token er oprettet.
         if(token) {
-            console.log("CHILDLOGIN USEEFFECT TOKEN ")
-            console.log(token)
-            console.log("token slut")
-            console.log(targetParent)
-            console.log("TARGET PARENT SLUT")
             navigation.navigate("AppScreen", {
                 screen: "ToDoList",
                 params: {uid: targetParent["uid"], parent: false}
@@ -61,7 +56,7 @@ export default ChildLogin = ({navigation}) => {
     }
 
     const renderButton = () => {
-        return <Pressable onPress={() => handleSubmit()}  style={[styles.button, {backgroundColor: "#FFF"}]} ><Text style={styles.text}> Opret din konto</Text></Pressable>;
+        return <Pressable onPress={() => handleSubmit()}  style={[styles.button, {backgroundColor: "#FFF"}]} ><Text style={styles.text}> Login </Text></Pressable>;
     }
 
     return (

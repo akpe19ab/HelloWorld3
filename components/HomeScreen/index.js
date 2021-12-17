@@ -33,7 +33,7 @@ function HomeScreen() {
                     <View style={styles.space} />
                     <StylesButton
                         type="primary"
-                        content={"Opret dig som barn"}
+                        content={"Login for børn"}
                         navigateTo={"ChildLogin"}
                     />
                     <View style={styles.space} />

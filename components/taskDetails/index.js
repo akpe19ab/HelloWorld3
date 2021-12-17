@@ -24,13 +24,7 @@ const CarDetails = ({route,navigation}) => {
         /*Henter car values og sætter dem*/
         setTask(route.params.ItemName);
     });
-    /*
-    const handleEdit = () => {
-        // Vi navigerer videre til EditCar skærmen og sender bilen videre med
-        const car = route.params.car
-        navigation.navigate('Edit Car', { car });
-    };
-    */
+
     // Vi spørger brugeren om han er sikker
     const confirmDelete = () => {
         /*Er det mobile?*/
@@ -68,8 +62,7 @@ const CarDetails = ({route,navigation}) => {
     return (
 
         <View style={styles.container}>
-            <Button title="Edit" onPress={ () => handleEdit()} />
-            <Button title="Delete" onPress={() => confirmDelete()} />
+            {route.params.parent && (<Button title="Delete" onPress={() => confirmDelete()} />)}
             {
                 Object.entries(task).map((item,index)=>{
                     return(

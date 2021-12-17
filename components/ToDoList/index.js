@@ -15,11 +15,15 @@ function ToDoList({route, navigation}) {
     const [loading, setLoading]= useState(true)
     const [specificUserRef, setSpecificUserRef] = useState()
     const [value, setValue] = useState(0);
-    const [specificUserId, setSpecificUserId] = useState()
+    const [childKey, setChildKey] = useState()
 
-    useEffect(async () => {//Funktion der henter den nuværende brugers opgaver
+    useEffect(async () => {//Funktion der henter den nuværende brugers opgaver og børnekode
         console.log(route.params.parent)
         const uid = route.params.uid
+        await firebase.database().ref(`user/${uid}/key`).on("value", (snapshot) => {
+            setChildKey(snapshot.val())
+        })
+
         await firebase.database().ref(`user/${uid}/liste`).on("value", (snapshot => {
             setTaskItemsFull(snapshot.val())
         }))
@@ -78,7 +82,7 @@ function ToDoList({route, navigation}) {
         /*Her søger vi direkte i vores array af biler og finder bil objektet som matcher idet vi har tilsendt*/
        let  ItemName = taskItemsFull[index]
        
-        navigation.navigate("TaskDetails", {ItemName: ItemName, specificUserId: route.params.uid})
+        navigation.navigate("TaskDetails", {ItemName: ItemName, specificUserId: route.params.uid, parent: route.params.parent})
     };
 
     let taskArray
@@ -96,6 +100,7 @@ function ToDoList({route, navigation}) {
             <View style={styles.tasksWrapper}>
 
                 <View style={styles.items}>
+                    {childKey && route.params.parent && (<Text>Dit barns kodeord er: {childKey}</Text>)}
                     <FlatList
                         data={taskArray}
                         keyExtractor={(item, index) => taskKeys[index]}
