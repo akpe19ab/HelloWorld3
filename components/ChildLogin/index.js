@@ -8,7 +8,7 @@ import { setAutoServerRegistrationEnabledAsync } from 'expo-notifications';
 
 
 export default ChildLogin = ({navigation}) => {
-    const [kode, setKode] = useState('780563');
+    const [kode, setKode] = useState('404073');
     const [errorM, setErrorM] = useState();
     const [token, setToken] = useState();
     const [targetParent, setTargetParent] = useState();
